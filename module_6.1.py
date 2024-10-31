@@ -4,12 +4,6 @@ class Animal:
         self.fed = False   # Накормленное
         self.name = name   # Имя животного
 
-class Plant:
-    def __init__(self, name):
-        self.edible = False  # Съедобность
-        self.name = name      # Имя растения
-
-class Mammal(Animal):
     def eat(self, food):
         if food.edible:
             self.fed = True
@@ -18,14 +12,16 @@ class Mammal(Animal):
             self.alive = False
             print(f"{self.name} не стал есть {food.name} и погиб.")
 
+class Plant:
+    def __init__(self, name):
+        self.edible = False  # Съедобность
+        self.name = name      # Имя растения
+
+class Mammal(Animal):
+    pass  # Млекопитающие могут использовать метод eat из Animal
+
 class Predator(Animal):
-    def eat(self, food):
-        if food.edible:
-            self.fed = True
-            print(f"{self.name} съел {food.name}.")
-        else:
-            self.alive = False
-            print(f"{self.name} не стал есть {food.name}.")
+    pass  # Хищники могут использовать метод eat из Animal
 
 class Flower(Plant):
     pass  # Цветы по умолчанию не съедобные
@@ -35,6 +31,7 @@ class Fruit(Plant):
         super().__init__(name)
         self.edible = True  # Плоды съедобные
 
+# Создание объектов классов
 a1 = Predator('Волк с Уолл-Стрит')
 a2 = Mammal('Хатико')
 p1 = Flower('Цветик семицветик')
