@@ -1,8 +1,14 @@
+import time
+
+
 class User:
     def __init__(self, nickname, password, age):
-        self.nickname = nickname
-        self.password = hash(password)
-        self.age = age
+        self.nickname = nickname  # Имя пользователя
+        self.password = self.hash_password(password)  # Хэшированный пароль
+        self.age = age  # Возраст пользователя
+
+    def hash_password(self, password):
+        return hash(password)
 
 
 class Video:
@@ -10,24 +16,20 @@ class Video:
         self.title = title
         self.duration = duration  # в секундах
         self.time_now = 0  # текущая секунда остановки
-        self.adult_mode = adult_mode  # ограничение по возрасту
-
-
+        self.adult_mode = adult_mode   # ограничение по возрасту
 
 class UrTube:
     def __init__(self):
-        self.users = {}
+        self.users = []
         self.videos = []
         self.current_user = None
 
     def log_in(self, nickname, password):
-        self.nickname = nickname
-        if password == password:
-            self.password = password
+        hashed_password = hash(password)
         for user in self.users:
-            if user.nickname == nickname and user.password == password:
+            if user.nickname == nickname and user.password == hashed_password:
                 self.current_user = user
-                print(f"Пользователь {nickname} вошел в систему.")
+                print(f"Пользователь {nickname} успешно вошел в систему.")
                 return
         print("Неверное имя пользователя или пароль.")
 
@@ -38,7 +40,7 @@ class UrTube:
                 return
         new_user = User(nickname, password, age)
         self.users.append(new_user)
-        self.current_user = new_user
+        self.current_user = new_user  # Автоматический вход после регистрации
         print(f"Пользователь {nickname} зарегистрирован и вошел в систему.")
 
     def log_out(self):
@@ -58,22 +60,32 @@ class UrTube:
         return [video.title for video in self.videos if search_term_lower in video.title.lower()]
 
     def watch_video(self, title):
+        if self.current_user is None:
+            print("Войдите в аккаунт, чтобы смотреть видео.")
+            return
+
         for video in self.videos:
             if video.title == title:
+                if video.adult_mode and self.current_user.age < 18:
+                    print("Вам нет 18 лет, пожалуйста покиньте страницу.")
+                    return
+
                 print(f"Начало просмотра видео '{title}'.")
                 while video.time_now < video.duration:
                     print(f"Просмотр на {video.time_now} сек.")
-                    video.time_now += 1  # имитация просмотра
-                print(f"Просмотр видео '{title}' завершен.")
-                video.time_now = 0  # сброс времени
+                    time.sleep(1)  # Пауза в 1 секунду между выводами
+                    video.time_now += 1  # Имитация просмотра
+                print("Конец видео.")
+                video.time_now = 0  # Сброс времени
                 return
         print(f"Видео '{title}' не найдено.")
 
 
-if __name__ == "main":
+if __name__ == "__main__":
+
     ur = UrTube()
     v1 = Video('Лучший язык программирования 2024 года', 200)
-    # v2 = Video('Для чего девушкам парень программист?', 10, adult_mode=True)
+    v2 = Video('Для чего девушкам парень программист?', 10, adult_mode=True)
 
     # Добавление видео
     ur.add(v1, v2)
@@ -95,3 +107,4 @@ if __name__ == "main":
 
     # Попытка воспроизведения несуществующего видео
     ur.watch_video('Лучший язык программирования 2024 года!')
+
