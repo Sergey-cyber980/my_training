@@ -10,6 +10,9 @@ class User:
     def hash_password(self, password):
         return hash(password)
 
+    def __str__(self):
+        return self.nickname
+
 
 class Video:
     def __init__(self, title, duration, adult_mode=False):
