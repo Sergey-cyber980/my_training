@@ -17,15 +17,14 @@ class Shop:
         return prod_str
 
     def add(self, *products):
-        file_name = self.get_product()
+        products_in_file = self.get_product()
         for i in products:
-            if self.get_product().find(f'{i.name},'):
+            if str(Product) not in products_in_file:
                 file = open(self.__file_name, 'a')
                 file.write(f'{i}\n')
                 file.close()
             else:
-                print(f'Продукт {i.name} уже есть в магазине')
-
+                print(f'Продукт {Product} уже есть в магазине')
 
 # Пример использования
 if __name__ == "__main__":
