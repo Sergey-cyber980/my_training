@@ -1,10 +1,8 @@
 import os
 import time
 
-# Укажите директорию для обхода
 directory = "."
 
-# Обход каталога
 for root, dirs, files in os.walk(directory):
     for file in files:
         filepath = os.path.join(root, file) # Формируем полный путь к файлу
