@@ -1,6 +1,6 @@
 def add_everything_up(a, b):
     try:
-        # Проверяем, являются ли оба аргумента числами (int или float)
+        # Проверяем, являются ли оба аргумента числами (int или float)*
         if isinstance(a, (int, float)) and isinstance(b, (int, float)):
             return a + b 
         elif isinstance(a, str) and isinstance(b, str):
