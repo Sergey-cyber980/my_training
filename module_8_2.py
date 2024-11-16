@@ -28,7 +28,7 @@ def calculate_average(numbers):
 
     except TypeError as e:
         print(e)
-    return None
+    return 0
 
 print(f'Результат 1: {calculate_average("1, 2, 3")}') # Строка перебирается, но каждый символ - строковый тип
 print(f'Результат 2: {calculate_average([1, "Строка", 3, "Ещё Строка"])}') # Учитываются только 1 и 3
