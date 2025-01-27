@@ -80,7 +80,7 @@ async def send_calories(message: types.Message, state: FSMContext):
 async def get_buying_list(message: types.Message):
     for i in range(1, 5):
         await message.answer(f'Название: Product{i} | Описание: описание {i} | Цена: {i * 100}')
-        await bot.send_photo(chat_id=message.chat.id, photo=open(f"D:/PythonProjecst/TelegramBot/files/{i}.png", 'rb'))
+        await bot.send_photo(chat_id=message.chat.id, photo=open(f"D:/PythonProjecst/TelegramBot/files/image{i}.png", 'rb'))
     await message.answer("Выберите продукт для покупки:", reply_markup=kb_products)
 
 @dp.callback_query_handler(text="product_buying")
